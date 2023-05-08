@@ -3,6 +3,8 @@ from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QApplication, QMainWindow
 from qt.frame.TranslateFrame import Ui_MainWindow
 from utils.baiduApi import baiduTranslate
+import pyperclip
+import pyttsx3
 
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
@@ -12,6 +14,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         # 实现点击图片 调用自定义方法
         self.exchangeLabel.mousePressEvent = self.on_label_clicked
         self.clearLlabel.mousePressEvent = self.chearText
+        self.copyLabel.mousePressEvent = self.copyToBoard
+        self.pasteLabel.mousePressEvent = self.pasteToEdit
+        self.speakerLabel1.mousePressEvent = self.speakerSourceText
+        self.speakerLabel2.mousePressEvent = self.speakerTargetText
         self.timer = QTimer()
         # 定时器，超过时间间隔才会请求
         self.timer.setInterval(250)  # 设置时间间隔为250ms
@@ -52,6 +58,38 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def on_text_changed(self):
         self.timer.start()  # 每次输入内容时重新启动计时器
+
+    def copyToBoard(self, event):
+        if event.button() == Qt.LeftButton:
+            text = self.targetTextEdit.toPlainText()
+            pyperclip.copy(text)
+
+    def pasteToEdit(self, event):
+        if event.button() == Qt.LeftButton:
+            text = pyperclip.paste()
+            self.sourceTextEdit.setText(text)
+
+    def speakerSourceText(self, event):
+        if event.button() == Qt.LeftButton:
+            text = self.sourceTextEdit.toPlainText()
+            engine = pyttsx3.init()
+            engine.setProperty('rate', 150)  # 设置语速
+            # engine.setProperty('volume', 0.9)  # 设置音量
+            # voices = engine.getProperty('voices')
+            # engine.setProperty('voice', voices[1].id)  # 设置声音（这里指定第二种中文女声）
+            engine.say(text)
+            engine.runAndWait()
+
+    def speakerTargetText(self, event):
+        text = self.targetTextEdit.toPlainText()
+        engine = pyttsx3.init()
+        engine.setProperty('rate', 150)  # 设置语速
+        # engine.setProperty('volume', 0.9)  # 设置音量
+        # voices = engine.getProperty('voices')
+        engine.setProperty('voice', 'english')
+        # engine.setProperty('voice', voices[1].id)  # 设置声音（这里指定第二种中文女声）
+        engine.say(text)
+        engine.runAndWait()
 
 
 if __name__ == '__main__':
