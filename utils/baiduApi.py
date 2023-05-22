@@ -5,10 +5,12 @@
 # You may install `requests` to run this code: pip install requests
 # Please refer to `https://api.fanyi.baidu.com/doc/21` for complete api document
 
-import requests
 import random
-import json
 from hashlib import md5
+import requests
+
+API_KEY = "sKQ7uMd160I5D27cq0TiSGup"
+SECRET_KEY = "yEbxjq7ch02iAlMv03fpcvLGt2UkGGml"
 
 # Set your own appid/appkey.
 appid = '20230507001669070'
@@ -35,7 +37,6 @@ def make_md5(s, encoding='utf-8'):
 
 
 def baiduTranslate(source, target, query):
-
     salt = random.randint(32768, 65536)
     sign = make_md5(appid + query + str(salt) + appkey)
     from_lang = lang_dict[source]
@@ -46,10 +47,35 @@ def baiduTranslate(source, target, query):
     # Send request
     r = requests.post(url, params=payload, headers=headers)
     result = r.json()
+    print(result)
     return result
 
 
-# baiduTranslate()
-#
-# # Show response
-# print(json.dumps(result, indent=4, ensure_ascii=False))
+def main():
+    url = "https://tsn.baidu.com/text2audio"
+    text = "你好北京".encode("utf-8")
+
+    payload = f'tex={text}&tok=' + get_access_token() + '&cuid=2121242342343&ctp=1&lan=zh'
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': '*/*'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+    response.encoding = "utf-8"
+    print(response.headers.get("Content-Type"))
+    print(response.text)
+
+
+def get_access_token():
+    """
+    使用 AK，SK 生成鉴权签名（Access Token）
+    :return: access_token，或是None(如果错误)
+    """
+    url = "https://aip.baidubce.com/oauth/2.0/token"
+    params = {"grant_type": "client_credentials", "client_id": API_KEY, "client_secret": SECRET_KEY}
+    return str(requests.post(url, params=params).json().get("access_token"))
+
+
+if __name__ == '__main__':
+    main()

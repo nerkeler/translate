@@ -1,6 +1,8 @@
 import sys
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QApplication, QMainWindow
+
+from mapper.WordRecord import WordRecord
 from qt.frame.TranslateFrame import Ui_MainWindow
 from utils.baiduApi import baiduTranslate
 import pyperclip
@@ -56,6 +58,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
             self.targetTextEdit.setText(target_result)
 
+
+
     def on_text_changed(self):
         self.timer.start()  # 每次输入内容时重新启动计时器
 
@@ -72,6 +76,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def speakerSourceText(self, event):
         if event.button() == Qt.LeftButton:
             text = self.sourceTextEdit.toPlainText()
+
             engine = pyttsx3.init()
             engine.setProperty('rate', 150)  # 设置语速
             # engine.setProperty('volume', 0.9)  # 设置音量
@@ -80,13 +85,14 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             engine.say(text)
             engine.runAndWait()
 
+
     def speakerTargetText(self, event):
         text = self.targetTextEdit.toPlainText()
         engine = pyttsx3.init()
         engine.setProperty('rate', 150)  # 设置语速
         # engine.setProperty('volume', 0.9)  # 设置音量
         # voices = engine.getProperty('voices')
-        engine.setProperty('voice', 'english')
+        # engine.setProperty('voice', 'english')
         # engine.setProperty('voice', voices[1].id)  # 设置声音（这里指定第二种中文女声）
         engine.say(text)
         engine.runAndWait()
