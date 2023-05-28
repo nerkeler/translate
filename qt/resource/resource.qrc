@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="resource">
+    <file>copy.png</file>
+    <file>paste.png</file>
+    <file>bidirectional.png</file>
+    <file>close.png</file>
+    <file>speakers.png</file>
+  </qresource>
+</RCC>
