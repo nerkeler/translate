@@ -15,7 +15,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         # 实现点击图片 调用自定义方法
         self.exchangeLabel.mousePressEvent = self.on_label_clicked
-        self.clearLlabel.mousePressEvent = self.chearText
+        self.clearLlabel.mousePressEvent = self.clear_text
+        self.clearLlabel_2.mousePressEvent = self.clear_text
         self.copyLabel.mousePressEvent = self.copyToBoard
         self.pasteLabel.mousePressEvent = self.pasteToEdit
         self.speakerLabel1.mousePressEvent = self.speakerSourceText
@@ -36,7 +37,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def queryBaiduApi(self):
         self.on_text_changed()
 
-    def chearText(self, event):
+    def clear_text(self, event):
         if event.button() == Qt.LeftButton:
             self.sourceTextEdit.clear()
             self.targetTextEdit.clear()
@@ -57,8 +58,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                 target_result = target_result + item['dst'] + '\n'
 
             self.targetTextEdit.setText(target_result)
-
-
+            result = result['trans_result'][0]
+            src = result['src']
+            dst = result['dst']
+            self.history_list.insertItem(0, f"{src} : {dst}")
 
     def on_text_changed(self):
         self.timer.start()  # 每次输入内容时重新启动计时器
@@ -84,7 +87,6 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             # engine.setProperty('voice', voices[1].id)  # 设置声音（这里指定第二种中文女声）
             engine.say(text)
             engine.runAndWait()
-
 
     def speakerTargetText(self, event):
         text = self.targetTextEdit.toPlainText()

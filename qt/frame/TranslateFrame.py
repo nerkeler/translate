@@ -16,42 +16,45 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
-    QHBoxLayout, QLabel, QMainWindow, QSizePolicy,
-    QSpacerItem, QTextEdit, QVBoxLayout, QWidget)
-import qt.frame.resource_rc
+    QHBoxLayout, QLabel, QListWidget, QListWidgetItem,
+    QMainWindow, QSizePolicy, QSpacerItem, QTextEdit,
+    QVBoxLayout, QWidget)
+import qt.resource.resource_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(773, 624)
+        MainWindow.resize(1016, 628)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.gridLayout = QGridLayout(self.centralwidget)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout.addItem(self.verticalSpacer, 0, 0, 1, 1)
-
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout.addItem(self.verticalSpacer_2, 0, 2, 1, 1)
-
-        self.verticalLayout_3 = QVBoxLayout()
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.frame_3 = QFrame(self.centralwidget)
+        self.gridLayout_2 = QGridLayout(self.centralwidget)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.frame = QFrame(self.centralwidget)
+        self.frame.setObjectName(u"frame")
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_3 = QHBoxLayout(self.frame)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.frame_3 = QFrame(self.frame)
         self.frame_3.setObjectName(u"frame_3")
-        self.frame_3.setMinimumSize(QSize(0, 45))
-        self.frame_3.setMaximumSize(QSize(16777215, 45))
         self.frame_3.setFrameShape(QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_4 = QHBoxLayout(self.frame_3)
+        self.gridLayout = QGridLayout(self.frame_3)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.top_frame = QFrame(self.frame_3)
+        self.top_frame.setObjectName(u"top_frame")
+        self.top_frame.setMinimumSize(QSize(0, 45))
+        self.top_frame.setMaximumSize(QSize(16777215, 45))
+        self.top_frame.setFrameShape(QFrame.StyledPanel)
+        self.top_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_4 = QHBoxLayout(self.top_frame)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalSpacer_3 = QSpacerItem(83, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_3)
 
-        self.sourceComboBox = QComboBox(self.frame_3)
+        self.sourceComboBox = QComboBox(self.top_frame)
         self.sourceComboBox.addItem("")
         self.sourceComboBox.addItem("")
         self.sourceComboBox.addItem("")
@@ -71,10 +74,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_5)
 
-        self.exchangeLabel = QLabel(self.frame_3)
+        self.exchangeLabel = QLabel(self.top_frame)
         self.exchangeLabel.setObjectName(u"exchangeLabel")
-        self.exchangeLabel.setMinimumSize(QSize(111, 31))
-        self.exchangeLabel.setMaximumSize(QSize(111, 31))
+        self.exchangeLabel.setMinimumSize(QSize(111, 25))
+        self.exchangeLabel.setMaximumSize(QSize(111, 25))
         self.exchangeLabel.setPixmap(QPixmap(u":/resource/bidirectional.png"))
         self.exchangeLabel.setScaledContents(True)
 
@@ -84,7 +87,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_6)
 
-        self.targetComboBox = QComboBox(self.frame_3)
+        self.targetComboBox = QComboBox(self.top_frame)
         self.targetComboBox.addItem("")
         self.targetComboBox.addItem("")
         self.targetComboBox.addItem("")
@@ -103,32 +106,26 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addItem(self.horizontalSpacer_4)
 
 
-        self.verticalLayout_3.addWidget(self.frame_3)
+        self.gridLayout.addWidget(self.top_frame, 0, 0, 1, 2)
 
-        self.line_2 = QFrame(self.centralwidget)
-        self.line_2.setObjectName(u"line_2")
-        self.line_2.setFrameShape(QFrame.HLine)
-        self.line_2.setFrameShadow(QFrame.Sunken)
-
-        self.verticalLayout_3.addWidget(self.line_2)
-
-        self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.verticalLayout_2 = QVBoxLayout()
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.frame = QFrame(self.centralwidget)
-        self.frame.setObjectName(u"frame")
-        self.frame.setMinimumSize(QSize(0, 31))
-        self.frame.setMaximumSize(QSize(16777215, 31))
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout = QHBoxLayout(self.frame)
+        self.source_frame = QFrame(self.frame_3)
+        self.source_frame.setObjectName(u"source_frame")
+        self.source_frame.setFrameShape(QFrame.StyledPanel)
+        self.source_frame.setFrameShadow(QFrame.Raised)
+        self.verticalLayout = QVBoxLayout(self.source_frame)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.frame_5 = QFrame(self.source_frame)
+        self.frame_5.setObjectName(u"frame_5")
+        self.frame_5.setMinimumSize(QSize(260, 0))
+        self.frame_5.setFrameShape(QFrame.StyledPanel)
+        self.frame_5.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout = QHBoxLayout(self.frame_5)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalSpacer = QSpacerItem(242, 8, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
-        self.speakerLabel1 = QLabel(self.frame)
+        self.speakerLabel1 = QLabel(self.frame_5)
         self.speakerLabel1.setObjectName(u"speakerLabel1")
         self.speakerLabel1.setMinimumSize(QSize(21, 21))
         self.speakerLabel1.setMaximumSize(QSize(21, 21))
@@ -137,7 +134,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.speakerLabel1)
 
-        self.pasteLabel = QLabel(self.frame)
+        self.pasteLabel = QLabel(self.frame_5)
         self.pasteLabel.setObjectName(u"pasteLabel")
         self.pasteLabel.setMinimumSize(QSize(21, 21))
         self.pasteLabel.setMaximumSize(QSize(21, 21))
@@ -146,7 +143,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.pasteLabel)
 
-        self.clearLlabel = QLabel(self.frame)
+        self.clearLlabel = QLabel(self.frame_5)
         self.clearLlabel.setObjectName(u"clearLlabel")
         self.clearLlabel.setMinimumSize(QSize(21, 21))
         self.clearLlabel.setMaximumSize(QSize(21, 21))
@@ -156,9 +153,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.clearLlabel)
 
 
-        self.verticalLayout_2.addWidget(self.frame)
+        self.verticalLayout.addWidget(self.frame_5)
 
-        self.sourceTextEdit = QTextEdit(self.centralwidget)
+        self.sourceTextEdit = QTextEdit(self.source_frame)
         self.sourceTextEdit.setObjectName(u"sourceTextEdit")
         self.sourceTextEdit.setMinimumSize(QSize(200, 260))
         font1 = QFont()
@@ -166,33 +163,29 @@ class Ui_MainWindow(object):
         font1.setPointSize(16)
         self.sourceTextEdit.setFont(font1)
 
-        self.verticalLayout_2.addWidget(self.sourceTextEdit)
+        self.verticalLayout.addWidget(self.sourceTextEdit)
 
 
-        self.horizontalLayout_3.addLayout(self.verticalLayout_2)
+        self.gridLayout.addWidget(self.source_frame, 1, 0, 1, 1)
 
-        self.line = QFrame(self.centralwidget)
-        self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.VLine)
-        self.line.setFrameShadow(QFrame.Sunken)
-
-        self.horizontalLayout_3.addWidget(self.line)
-
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.frame_2 = QFrame(self.centralwidget)
-        self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setMinimumSize(QSize(0, 30))
-        self.frame_2.setMaximumSize(QSize(16777215, 30))
-        self.frame_2.setFrameShape(QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_2 = QHBoxLayout(self.frame_2)
+        self.frame_4 = QFrame(self.frame_3)
+        self.frame_4.setObjectName(u"frame_4")
+        self.frame_4.setFrameShape(QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_2 = QVBoxLayout(self.frame_4)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.target_frame = QFrame(self.frame_4)
+        self.target_frame.setObjectName(u"target_frame")
+        self.target_frame.setMinimumSize(QSize(260, 0))
+        self.target_frame.setFrameShape(QFrame.StyledPanel)
+        self.target_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_2 = QHBoxLayout(self.target_frame)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalSpacerTrans = QSpacerItem(241, 7, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacerTrans = QSpacerItem(242, 8, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacerTrans)
 
-        self.speakerLabel2 = QLabel(self.frame_2)
+        self.speakerLabel2 = QLabel(self.target_frame)
         self.speakerLabel2.setObjectName(u"speakerLabel2")
         self.speakerLabel2.setMinimumSize(QSize(21, 21))
         self.speakerLabel2.setMaximumSize(QSize(21, 21))
@@ -201,7 +194,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.speakerLabel2)
 
-        self.copyLabel = QLabel(self.frame_2)
+        self.copyLabel = QLabel(self.target_frame)
         self.copyLabel.setObjectName(u"copyLabel")
         self.copyLabel.setMinimumSize(QSize(21, 21))
         self.copyLabel.setMaximumSize(QSize(21, 21))
@@ -210,7 +203,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.copyLabel)
 
-        self.clearLlabel_2 = QLabel(self.frame_2)
+        self.clearLlabel_2 = QLabel(self.target_frame)
         self.clearLlabel_2.setObjectName(u"clearLlabel_2")
         self.clearLlabel_2.setMinimumSize(QSize(21, 21))
         self.clearLlabel_2.setMaximumSize(QSize(21, 21))
@@ -219,31 +212,53 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.clearLlabel_2)
 
-        self.clearLlabel_2.raise_()
-        self.copyLabel.raise_()
-        self.speakerLabel2.raise_()
 
-        self.verticalLayout.addWidget(self.frame_2)
+        self.verticalLayout_2.addWidget(self.target_frame)
 
-        self.targetTextEdit = QTextEdit(self.centralwidget)
+        self.targetTextEdit = QTextEdit(self.frame_4)
         self.targetTextEdit.setObjectName(u"targetTextEdit")
         self.targetTextEdit.setMinimumSize(QSize(200, 260))
         self.targetTextEdit.setFont(font1)
 
-        self.verticalLayout.addWidget(self.targetTextEdit)
+        self.verticalLayout_2.addWidget(self.targetTextEdit)
 
 
-        self.horizontalLayout_3.addLayout(self.verticalLayout)
+        self.gridLayout.addWidget(self.frame_4, 1, 1, 1, 1)
 
 
-        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
+        self.horizontalLayout_3.addWidget(self.frame_3)
+
+        self.frame_2 = QFrame(self.frame)
+        self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setFrameShape(QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_3 = QVBoxLayout(self.frame_2)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, -1, 0, 18)
+        self.label = QLabel(self.frame_2)
+        self.label.setObjectName(u"label")
+        font2 = QFont()
+        font2.setPointSize(11)
+        self.label.setFont(font2)
+
+        self.verticalLayout_3.addWidget(self.label)
+
+        self.history_list = QListWidget(self.frame_2)
+        self.history_list.setObjectName(u"history_list")
+        self.history_list.setMinimumSize(QSize(200, 0))
+        self.history_list.setMaximumSize(QSize(200, 16777215))
+        font3 = QFont()
+        font3.setPointSize(13)
+        font3.setBold(False)
+        self.history_list.setFont(font3)
+
+        self.verticalLayout_3.addWidget(self.history_list)
 
 
-        self.gridLayout.addLayout(self.verticalLayout_3, 0, 1, 1, 1)
+        self.horizontalLayout_3.addWidget(self.frame_2)
 
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout.addItem(self.horizontalSpacer_2, 1, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.frame, 0, 1, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -278,5 +293,6 @@ class Ui_MainWindow(object):
         self.copyLabel.setText("")
         self.clearLlabel_2.setText("")
         self.targetTextEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u7ffb\u8bd1", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"\u67e5\u8be2\u5386\u53f2", None))
     # retranslateUi
 

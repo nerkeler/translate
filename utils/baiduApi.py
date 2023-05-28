@@ -47,7 +47,10 @@ def baiduTranslate(source, target, query):
     # Send request
     r = requests.post(url, params=payload, headers=headers)
     result = r.json()
-    print(result)
+    # 查询记录，追加第一行模式
+    with open("history.txt", 'a', encoding="utf-8") as file:
+        file.write(str(result['trans_result'][0]) + "\n")
+        file.close()
     return result
 
 
