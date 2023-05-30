@@ -1,5 +1,6 @@
 import sys
 from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QApplication, QMainWindow
 
 from mapper.WordRecord import WordRecord
@@ -7,6 +8,7 @@ from qt.frame.TranslateFrame import Ui_MainWindow
 from utils.baiduApi import baiduTranslate
 import pyperclip
 import pyttsx3
+import qt.resource.resource_rc
 
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
@@ -21,10 +23,17 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.pasteLabel.mousePressEvent = self.pasteToEdit
         self.speakerLabel1.mousePressEvent = self.speakerSourceText
         self.speakerLabel2.mousePressEvent = self.speakerTargetText
+        self.fold_label.mousePressEvent = self.fold_list
         self.timer = QTimer()
         # 定时器，超过时间间隔才会请求
         self.timer.setInterval(250)  # 设置时间间隔为250ms
         self.timer.timeout.connect(self.on_timer_timeout)
+        print(self.frame_2.width())
+
+        self.frame_2.setVisible(False)
+        print(self.frame_2.width())
+        self.setFixedWidth(719)
+        self.fold_label.setPixmap(QPixmap(u":/resource/launch.png"))
 
     # 交换 目标语言和源语言
     def on_label_clicked(self, event):
@@ -99,9 +108,25 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         engine.say(text)
         engine.runAndWait()
 
+    def fold_list(self, event):
+        main_width = self.width()
+        width = self.frame_2.width()
+        if event.button() == Qt.LeftButton:
+            if not self.frame_2.isVisible():
+                self.frame_2.setVisible(True)
+                self.setFixedWidth(main_width + 232)
+                self.fold_label.setPixmap(QPixmap(u":/resource/fold.png"))
+            else:
+                self.frame_2.setVisible(False)
+                self.setFixedWidth(main_width - width)
+                self.fold_label.setPixmap(QPixmap(u":/resource/launch.png"))
 
+
+#  pyinstaller -D translate.py -w -p ./qt/frame/Translate.py -p ./resource/resource_rc.py
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MyMainWindow()
+    window.setWindowTitle("Translate")
+    window.setWindowIcon(QIcon("translate.png"))
     window.show()
     sys.exit(app.exec())

@@ -1,9 +1,14 @@
 <RCC>
   <qresource prefix="resource">
-    <file>copy.png</file>
-    <file>paste.png</file>
+    <file>arrow.png</file>
+    <file>arrows.png</file>
     <file>bidirectional.png</file>
+    <file>circle.png</file>
     <file>close.png</file>
+    <file>copy.png</file>
+    <file>fold.png</file>
+    <file>launch.png</file>
+    <file>paste.png</file>
     <file>speakers.png</file>
   </qresource>
 </RCC>
